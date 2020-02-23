@@ -11,16 +11,26 @@ namespace lab1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly FoodDelivery_v2Context _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(FoodDelivery_v2Context context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Type()
+        {
+            return RedirectToAction("Index", "Types");
+        }
+
+        public IActionResult Restaurant()
+        {
+            return RedirectToAction("Index", "Restaurants");
         }
 
         public IActionResult Privacy()

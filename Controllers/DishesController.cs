@@ -53,7 +53,6 @@ namespace lab1.Controllers
         // GET: Dishes/Create
         public IActionResult Create(int typeId)
         {
-            Console.WriteLine("@@@@@@@@");
             ViewData["RestaurantId"] = new SelectList(_context.Restaurant, "Id", "Name");
             ViewBag.TypeId = typeId;
             ViewBag.TypeName = _context.Type.Where(c => c.Id == typeId).FirstOrDefault().Name;

@@ -5,6 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Client.cs" />
+    <Compile Remove="ClientCard.cs" />
+    <Compile Remove="Dish - Copy.cs" />
+    <Compile Remove="Dish.cs" />
+    <Compile Remove="DishIngredient.cs" />
+    <Compile Remove="FoodDelivery_v2Context.cs" />
+    <Compile Remove="Ingredient.cs" />
+    <Compile Remove="Models\Dish - Copy.cs" />
+    <Compile Remove="Order.cs" />
+    <Compile Remove="OrderDish.cs" />
+    <Compile Remove="Restaurant.cs" />
+    <Compile Remove="RestaurantLocation.cs" />
+    <Compile Remove="Type.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

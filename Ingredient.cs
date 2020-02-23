@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace lab1
 {
-    public partial class Type
+    public partial class Ingredient
     {
-        public Type()
+        public Ingredient()
         {
-            Dish = new HashSet<Dish>();
+            DishIngredient = new HashSet<DishIngredient>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string Info { get; set; }
 
-        public virtual ICollection<Dish> Dish { get; set; }
+        public virtual ICollection<DishIngredient> DishIngredient { get; set; }
     }
 }
