@@ -36,6 +36,10 @@ namespace lab1.Controllers
         {
             return RedirectToAction("Index", "Ingredients");
         }
+        public IActionResult Clients()
+        {
+            return RedirectToAction("Index", "Clients");
+        }
 
         public IActionResult Privacy()
         {
