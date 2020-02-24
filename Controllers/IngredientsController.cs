@@ -9,22 +9,22 @@ using lab1;
 
 namespace lab1.Controllers
 {
-    public class TypesController : Controller
+    public class IngredientsController : Controller
     {
         private readonly FoodDelivery_v2Context _context;
 
-        public TypesController(FoodDelivery_v2Context context)
+        public IngredientsController(FoodDelivery_v2Context context)
         {
             _context = context;
         }
 
-        // GET: Types
+        // GET: Ingredients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Type.ToListAsync());
+            return View(await _context.Ingredient.ToListAsync());
         }
 
-        // GET: Types/Details/5
+        // GET: Ingredients/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace lab1.Controllers
                 return NotFound();
             }
 
-            var @type = await _context.Type
+            var ingredient = await _context.Ingredient
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@type == null)
+            if (ingredient == null)
             {
                 return NotFound();
             }
 
-            return RedirectToAction("Index", "Dishes", new {id = @type.Id, name = @type.Name });
+            return View(ingredient);
         }
 
-        // GET: Types/Create
+        // GET: Ingredients/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Types/Create
+        // POST: Ingredients/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Info")] Type @type)
+        public async Task<IActionResult> Create([Bind("Id,Name,Info")] Ingredient ingredient)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@type);
+                _context.Add(ingredient);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(@type);
+            return View(ingredient);
         }
 
-        // GET: Types/Edit/5
+        // GET: Ingredients/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace lab1.Controllers
                 return NotFound();
             }
 
-            var @type = await _context.Type.FindAsync(id);
-            if (@type == null)
+            var ingredient = await _context.Ingredient.FindAsync(id);
+            if (ingredient == null)
             {
                 return NotFound();
             }
-            return View(@type);
+            return View(ingredient);
         }
 
-        // POST: Types/Edit/5
+        // POST: Ingredients/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Info")] Type @type)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Info")] Ingredient ingredient)
         {
-            if (id != @type.Id)
+            if (id != ingredient.Id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace lab1.Controllers
             {
                 try
                 {
-                    _context.Update(@type);
+                    _context.Update(ingredient);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TypeExists(@type.Id))
+                    if (!IngredientExists(ingredient.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace lab1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@type);
+            return View(ingredient);
         }
 
-        // GET: Types/Delete/5
+        // GET: Ingredients/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace lab1.Controllers
                 return NotFound();
             }
 
-            var @type = await _context.Type
+            var ingredient = await _context.Ingredient
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@type == null)
+            if (ingredient == null)
             {
                 return NotFound();
             }
 
-            return View(@type);
+            return View(ingredient);
         }
 
-        // POST: Types/Delete/5
+        // POST: Ingredients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @type = await _context.Type.FindAsync(id);
-            _context.Type.Remove(@type);
+            var ingredient = await _context.Ingredient.FindAsync(id);
+            _context.Ingredient.Remove(ingredient);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TypeExists(int id)
+        private bool IngredientExists(int id)
         {
-            return _context.Type.Any(e => e.Id == id);
+            return _context.Ingredient.Any(e => e.Id == id);
         }
     }
 }

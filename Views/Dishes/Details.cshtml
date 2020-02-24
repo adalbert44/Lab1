@@ -49,6 +49,11 @@
     </dl>
 </div>
 <div>
+    <a asp-action="Ingredients" asp-route-id="@Model.Id">Переглянути інгредієнти</a> |
+</div>
+<div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div>
+        @Html.ActionLink("Повернутись", "Index", new { id = ViewBag.TypeId, name = ViewBag.TypeName })
+    </div>
 </div>

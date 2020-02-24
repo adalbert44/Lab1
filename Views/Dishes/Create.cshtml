@@ -46,7 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Повернутись", "Index", new { id = ViewBag.TypeId, name=ViewBag.TypeName })
 </div>
 
 @section Scripts {

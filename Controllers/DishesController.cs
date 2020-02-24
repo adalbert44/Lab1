@@ -59,6 +59,24 @@ namespace lab1.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Ingredients(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @dish = await _context.Dish
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (@dish == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index", "DishIngredients", new { id = @dish.Id, name = @dish.Name });
+        }
+
+
         // POST: Dishes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
