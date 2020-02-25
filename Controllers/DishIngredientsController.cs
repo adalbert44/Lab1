@@ -21,8 +21,6 @@ namespace lab1.Controllers
         // GET: DishIngredients
         public async Task<IActionResult> Index(int? id, string? name)
         {
-            if (id == null) RedirectToAction("Types", "Index");
-            // Get ingredients by dish
             ViewBag.DishId = id;
             ViewBag.DishName = name;
             var dishIngredientsByDish = _context.DishIngredient.Where(b => b.DishId == id).Include(b => b.Ingredient);
@@ -51,10 +49,11 @@ namespace lab1.Controllers
         }
 
         // GET: DishIngredients/Create
-        public IActionResult Create()
+        public IActionResult Create(int dishId)
         {
-            ViewData["DishId"] = new SelectList(_context.Dish, "Id", "Name");
             ViewData["IngredientId"] = new SelectList(_context.Ingredient, "Id", "Name");
+            ViewBag.DishId = dishId;
+            ViewBag.DishName = _context.Dish.Where(c => c.Id == dishId).FirstOrDefault().Name;
             return View();
         }
 
@@ -63,16 +62,15 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DishId,IngredientId")] DishIngredient dishIngredient)
+        public async Task<IActionResult> Create(int dishId, [Bind("Id,DishId,IngredientId")] DishIngredient dishIngredient)
         {
+            dishIngredient.DishId = dishId;
             if (ModelState.IsValid)
             {
                 _context.Add(dishIngredient);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "DishIngredients", new { id = dishId, name = _context.Dish.Where(c => c.Id == dishId).FirstOrDefault().Name });
             }
-            ViewData["DishId"] = new SelectList(_context.Dish, "Id", "Name", dishIngredient.DishId);
-            ViewData["IngredientId"] = new SelectList(_context.Ingredient, "Id", "Name", dishIngredient.IngredientId);
             return View(dishIngredient);
         }
 
@@ -124,7 +122,7 @@ namespace lab1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "DishIngredients", new { id = dishIngredient.DishId, name = _context.Dish.Where(c => c.Id == dishIngredient.DishId).FirstOrDefault().Name });
             }
             ViewData["DishId"] = new SelectList(_context.Dish, "Id", "Name", dishIngredient.DishId);
             ViewData["IngredientId"] = new SelectList(_context.Ingredient, "Id", "Name", dishIngredient.IngredientId);
@@ -159,8 +157,15 @@ namespace lab1.Controllers
             var dishIngredient = await _context.DishIngredient.FindAsync(id);
             _context.DishIngredient.Remove(dishIngredient);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "DishIngredients", new { id = dishIngredient.DishId, name = _context.Dish.Where(c => c.Id == dishIngredient.DishId).FirstOrDefault().Name });
         }
+
+        public IActionResult Back(int dishId)
+        {
+            var typeId = _context.Dish.Where(c => c.Id == dishId).FirstOrDefault().TypeId;
+            return RedirectToAction("Index", "Dishes", new { id = typeId, name = _context.Type.Where(c => c.Id == typeId).FirstOrDefault().Name });
+        }
+
 
         private bool DishIngredientExists(int id)
         {

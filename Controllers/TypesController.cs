@@ -48,7 +48,7 @@ namespace lab1.Controllers
             return View();
         }
 
-        public IActionResult Home()
+        public IActionResult Back()
         {
             return RedirectToAction("Index", "Home");
         }
@@ -148,6 +148,12 @@ namespace lab1.Controllers
             var dishesByType = await  _context.Dish.Where(b => b.TypeId == id).Include(b => b.Type).ToListAsync();
             foreach (var dish in dishesByType)
             {
+                var ingredientsByDish = await _context.DishIngredient.Where(b => b.DishId == dish.Id).ToListAsync();
+                foreach (var dishIngredient in ingredientsByDish)
+                {
+                    _context.DishIngredient.Remove(dishIngredient);
+                }
+
                 _context.Dish.Remove(dish);
             }
 

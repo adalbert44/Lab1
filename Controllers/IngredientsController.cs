@@ -139,10 +139,22 @@ namespace lab1.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ingredient = await _context.Ingredient.FindAsync(id);
+
+            var dishByIngredient = await _context.DishIngredient.Where(b => b.IngredientId == id).ToListAsync();
+            foreach (var dishIngredient in dishByIngredient)
+            {
+                _context.DishIngredient.Remove(dishIngredient);
+            }
+
             _context.Ingredient.Remove(ingredient);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Back()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
 
         private bool IngredientExists(int id)
         {

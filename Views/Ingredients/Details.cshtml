@@ -1,13 +1,10 @@
 ﻿@model lab1.Ingredient
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "інформація";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>Ingredient</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -25,6 +22,8 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Змінити</a> |
+    <div>
+        <a href='javascript:history.go(-1)'>Повернутись</a>
+    </div>
 </div>

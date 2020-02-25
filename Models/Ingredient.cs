@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace lab1
 {
@@ -11,7 +12,9 @@ namespace lab1
         }
 
         public int Id { get; set; }
+        [Display(Name = "Назва")]
         public string Name { get; set; }
+        [Display(Name = "Інформація")]
         public string Info { get; set; }
 
         public virtual ICollection<DishIngredient> DishIngredient { get; set; }

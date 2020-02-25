@@ -51,14 +51,6 @@ namespace lab1.Controllers
         }
 
         // GET: Dishes/Create
-        public IActionResult Create(int typeId)
-        {
-            ViewData["RestaurantId"] = new SelectList(_context.Restaurant, "Id", "Name");
-            ViewBag.TypeId = typeId;
-            ViewBag.TypeName = _context.Type.Where(c => c.Id == typeId).FirstOrDefault().Name;
-            return View();
-        }
-
         public async Task<IActionResult> Ingredients(int? id)
         {
             if (id == null)
@@ -76,6 +68,13 @@ namespace lab1.Controllers
             return RedirectToAction("Index", "DishIngredients", new { id = @dish.Id, name = @dish.Name });
         }
 
+        public IActionResult Create(int typeId)
+        {
+            ViewData["RestaurantId"] = new SelectList(_context.Restaurant, "Id", "Name");
+            ViewBag.TypeId = typeId;
+            ViewBag.TypeName = _context.Type.Where(c => c.Id == typeId).FirstOrDefault().Name;
+            return View();
+        }
 
         // POST: Dishes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -91,8 +90,14 @@ namespace lab1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Dishes", new {id=typeId, name = _context.Type.Where(c => c.Id == typeId).FirstOrDefault().Name });
             }
-            return RedirectToAction("Index", "Dishes", new { id = typeId, name = _context.Type.Where(c => c.Id == typeId).FirstOrDefault().Name });
+            return View(dish);
         }
+
+        public IActionResult Back()
+        {
+            return RedirectToAction("Index", "Types");
+        }
+
 
         // GET: Dishes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -142,7 +147,7 @@ namespace lab1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Dishes", new { id = dish.TypeId, name = _context.Type.Where(c => c.Id == dish.TypeId).FirstOrDefault().Name });
             }
             ViewData["RestaurantId"] = new SelectList(_context.Restaurant, "Id", "Name", dish.RestaurantId);
             ViewData["TypeId"] = new SelectList(_context.Type, "Id", "Name", dish.TypeId);
@@ -175,9 +180,18 @@ namespace lab1.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var dish = await _context.Dish.FindAsync(id);
+            var ingredientsByDish = await _context.DishIngredient.Where(b => b.DishId == id).ToListAsync();
+            foreach (var dishIngredient in ingredientsByDish)
+            {
+                _context.DishIngredient.Remove(dishIngredient);
+            }
+
             _context.Dish.Remove(dish);
+
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+
+            return RedirectToAction("Index", "Dishes", new { id = dish.TypeId, name = _context.Type.Where(c => c.Id == dish.TypeId).FirstOrDefault().Name });
         }
 
         private bool DishExists(int id)

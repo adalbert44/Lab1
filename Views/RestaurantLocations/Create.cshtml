@@ -1,12 +1,11 @@
 ﻿@model lab1.RestaurantLocation
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "створення локації";
 }
 
-<h1>Додавання локації для ресторану @ViewBag.RestaurantName</h1>
+<h1>Створення локації для ресторану @ViewBag.RestaurantName</h1>
 
-<h4>RestaurantLocation</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,14 +30,14 @@
             <input type="hidden" value="@ViewBag.RestaurantId" name="RestaurantId" />
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Створити" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    @Html.ActionLink("Повернутись", "Index", new { id = ViewBag.RestaurantId, name = ViewBag.RestaurantName })
+    <a href='javascript:history.go(-1)'>Повернутись</a>
 </div>
 
 @section Scripts {

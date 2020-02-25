@@ -71,7 +71,7 @@ namespace lab1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "RestaurantLocations", new { id=restaurantId, name=_context.Restaurant.Where(c=>c.Id==restaurantId).FirstOrDefault().Name});
             }
-            return RedirectToAction("Index", "RestaurantLocations", new { id = restaurantId, name = _context.Restaurant.Where(c => c.Id == restaurantId).FirstOrDefault().Name });
+            return View(restaurantLocation);
         }
 
         // GET: RestaurantLocations/Edit/5
@@ -121,11 +121,17 @@ namespace lab1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "RestaurantLocations", new { id = restaurantLocation.RestaurantId, name = _context.Restaurant.Where(c => c.Id == restaurantLocation.RestaurantId).FirstOrDefault().Name });
             }
             ViewData["RestaurantId"] = new SelectList(_context.Restaurant, "Id", "Name", restaurantLocation.RestaurantId);
             return View(restaurantLocation);
         }
+
+        public IActionResult Back()
+        {
+            return RedirectToAction("Index", "Restaurants");
+        }
+
 
         // GET: RestaurantLocations/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -154,7 +160,7 @@ namespace lab1.Controllers
             var restaurantLocation = await _context.RestaurantLocation.FindAsync(id);
             _context.RestaurantLocation.Remove(restaurantLocation);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "RestaurantLocations", new { id = restaurantLocation.RestaurantId, name = _context.Restaurant.Where(c => c.Id == restaurantLocation.RestaurantId).FirstOrDefault().Name });
         }
 
         private bool RestaurantLocationExists(int id)
