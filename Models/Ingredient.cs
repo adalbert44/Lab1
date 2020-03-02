@@ -12,6 +12,7 @@ namespace lab1
         }
 
         public int Id { get; set; }
+        [Required(ErrorMessage = "Поле не повинно бути порожнім")]
         [Display(Name = "Назва")]
         public string Name { get; set; }
         [Display(Name = "Інформація")]
