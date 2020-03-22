@@ -11,7 +11,7 @@
 </p>
 <table class="table">
     <thead>
-        <tr  class="table-info">
+        <tr class="table-info">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -35,3 +35,28 @@
     </tbody>
 </table>
 
+<div class="container">
+    <div id="chart1"></div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            $.get('/api/RestaurantsDiagram/JsonData', function (jsonData) {
+                data = google.visualization.arrayToDataTable(jsonData, false);
+                var option = {
+                    title: "Співвідношення кількості відкритих закладів до ресторану",
+                    width: 1000,
+                    height: 800,
+                };
+                chart = new google.visualization.BarChart(document.getElementById('chart1'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
+}
