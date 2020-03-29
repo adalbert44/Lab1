@@ -9,6 +9,28 @@
 <p>
     <a asp-action="Create">Створити новий тип</a>
 </p>
+
+<div>
+    <h3>Завантаження інформації із файла</h3>
+    @using(Html.BeginForm("Import", "Types", FormMethod.Post, new
+	{
+		enctype="multipart/form-data", id="frm-excel"
+	}))
+	{
+        <div>
+            <input type="file" name="fileExcel" id="fileExcel"/>
+            <div>
+                <input type="submit" value="Завантажити" class="btn btn-primary" />
+            </div>
+        </div>
+	}
+</div>
+
+<div>
+    <h3>Завантаження інформації в файл</h3>
+    <a asp-action="Export" class="btn btn-primary" >Завантажити</a>
+</div>
+
 <table class="table">
     <thead>
         <tr class="table-info">
