@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using lab1;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lab1.Controllers
 {
@@ -49,6 +50,7 @@ namespace lab1.Controllers
         }
 
         // GET: DishIngredients/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create(int dishId)
         {
             ViewData["IngredientId"] = new SelectList(_context.Ingredient, "Id", "Name");
@@ -62,6 +64,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(int dishId, [Bind("Id,DishId,IngredientId")] DishIngredient dishIngredient)
         {
             dishIngredient.DishId = dishId;
@@ -75,6 +78,7 @@ namespace lab1.Controllers
         }
 
         // GET: DishIngredients/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,6 +101,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DishId,IngredientId")] DishIngredient dishIngredient)
         {
             if (id != dishIngredient.Id)
@@ -130,6 +135,7 @@ namespace lab1.Controllers
         }
 
         // GET: DishIngredients/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -151,6 +157,7 @@ namespace lab1.Controllers
 
         // POST: DishIngredients/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

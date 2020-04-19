@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using lab1;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lab1.Controllers
 {
@@ -68,6 +69,7 @@ namespace lab1.Controllers
             return RedirectToAction("Index", "DishIngredients", new { id = @dish.Id, name = @dish.Name });
         }
 
+        [Authorize(Roles="admin")]
         public IActionResult Create(int typeId)
         {
             ViewData["RestaurantId"] = new SelectList(_context.Restaurant, "Id", "Name");
@@ -81,6 +83,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(int typeId, [Bind("Id,RestaurantId,Name,TypeId,Recipe,Calories,Cost")] Dish dish)
         {
             dish.TypeId = typeId;
@@ -98,7 +101,7 @@ namespace lab1.Controllers
             return RedirectToAction("Index", "Types");
         }
 
-
+        [Authorize(Roles = "admin")]
         // GET: Dishes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -122,6 +125,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RestaurantId,Name,TypeId,Recipe,Calories,Cost")] Dish dish)
         {
             if (id != dish.Id)
@@ -155,6 +159,7 @@ namespace lab1.Controllers
         }
 
         // GET: Dishes/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -175,6 +180,7 @@ namespace lab1.Controllers
         }
 
         // POST: Dishes/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

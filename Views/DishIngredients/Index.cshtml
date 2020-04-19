@@ -6,14 +6,15 @@
 
 <h1>Інгредієнти для страви @ViewBag.DishName</h1>
 
-
-<p>
-    @Html.ActionLink("Додати інгредієнт", "Create", new { dishId = ViewBag.DishId })
-</p>
-
+@if (User.IsInRole("admin"))
+{
+    <p>
+        @Html.ActionLink("Додати інгредієнт", "Create", new { dishId = ViewBag.DishId })
+    </p>
+}
 <table class="table">
     <thead>
-        <tr  class="table-info">
+        <tr class="table-info">
             <th>
                 @Html.DisplayNameFor(model => model.Ingredient)
             </th>
@@ -27,9 +28,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Ingredient.Name)
                 </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
-                </td>
+                @if (User.IsInRole("admin"))
+                {
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using lab1;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lab1.Controllers
 {
@@ -50,6 +51,7 @@ namespace lab1.Controllers
         }
 
         // GET: RestaurantLocations/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create(int restaurantId)
         {
             ViewBag.RestaurantId = restaurantId;
@@ -62,6 +64,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(int restaurantId, [Bind("Id,RestaurantId,Address,OpeningTime,ClosingTime")] RestaurantLocation restaurantLocation)
         {
             restaurantLocation.RestaurantId = restaurantId;
@@ -75,6 +78,7 @@ namespace lab1.Controllers
         }
 
         // GET: RestaurantLocations/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,6 +100,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RestaurantId,Address,OpeningTime,ClosingTime")] RestaurantLocation restaurantLocation)
         {
             if (id != restaurantLocation.Id)
@@ -134,6 +139,7 @@ namespace lab1.Controllers
 
 
         // GET: RestaurantLocations/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -155,6 +161,7 @@ namespace lab1.Controllers
         // POST: RestaurantLocations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var restaurantLocation = await _context.RestaurantLocation.FindAsync(id);

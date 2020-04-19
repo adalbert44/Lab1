@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using lab1;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lab1.Controllers
 {
@@ -53,6 +54,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create([Bind("Id,Name")] Restaurant restaurant)
         {
             if (ModelState.IsValid)
@@ -65,6 +67,7 @@ namespace lab1.Controllers
         }
 
         // GET: Restaurants/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,6 +88,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Restaurant restaurant)
         {
             if (id != restaurant.Id)
@@ -116,6 +120,7 @@ namespace lab1.Controllers
         }
 
         // GET: Restaurants/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,6 +139,7 @@ namespace lab1.Controllers
         }
 
         // POST: Restaurants/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -151,7 +157,7 @@ namespace lab1.Controllers
         }
         public IActionResult Back()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Types");
         }
 
         private bool RestaurantExists(int id)

@@ -9,6 +9,7 @@ using lab1;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lab1.Controllers
 {
@@ -46,6 +47,7 @@ namespace lab1.Controllers
         }
 
         // GET: Types/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
@@ -53,7 +55,7 @@ namespace lab1.Controllers
 
         public IActionResult Back()
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Types");
         }
 
         // POST: Types/Create
@@ -61,6 +63,7 @@ namespace lab1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create([Bind("Id,Name,Info")] Type @type)
         {
             if (ModelState.IsValid)
@@ -74,6 +77,7 @@ namespace lab1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Import(IFormFile fileExcel)
         {
             if(ModelState.IsValid)
@@ -227,6 +231,7 @@ namespace lab1.Controllers
         }
 
         // GET: Types/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -246,6 +251,7 @@ namespace lab1.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Info")] Type @type)
         {
@@ -278,6 +284,7 @@ namespace lab1.Controllers
         }
 
         // GET: Types/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -296,6 +303,7 @@ namespace lab1.Controllers
         }
 
         // POST: Types/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

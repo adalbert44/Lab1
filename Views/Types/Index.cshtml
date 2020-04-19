@@ -6,29 +6,34 @@
 
 <h1>Вибір типу страви</h1>
 
-<p>
-    <a asp-action="Create">Створити новий тип</a>
-</p>
-
-<div>
-    <h3>Завантаження інформації із файла</h3>
-    @using(Html.BeginForm("Import", "Types", FormMethod.Post, new
-	{
-		enctype="multipart/form-data", id="frm-excel"
-	}))
-	{
-        <div>
-            <input type="file" name="fileExcel" id="fileExcel"/>
+@if (User.IsInRole("admin"))
+{
+    <p>
+        <a asp-action="Create">Створити новий тип</a>
+    </p>
+}
+@if (User.IsInRole("admin"))
+{
+    <div>
+        <h3>Завантаження інформації із файла</h3>
+        @using (Html.BeginForm("Import", "Types", FormMethod.Post, new
+        {
+            enctype = "multipart/form-data",
+            id = "frm-excel"
+        }))
+        {
             <div>
-                <input type="submit" value="Завантажити" class="btn btn-primary" />
+                <input type="file" name="fileExcel" id="fileExcel" />
+                <div>
+                    <input type="submit" value="Завантажити" class="btn btn-primary" />
+                </div>
             </div>
-        </div>
-	}
-</div>
-
+        }
+    </div>
+}
 <div>
     <h3>Завантаження інформації в файл</h3>
-    <a asp-action="Export" class="btn btn-primary" >Завантажити</a>
+    <a asp-action="Export" class="btn btn-primary">Завантажити</a>
 </div>
 
 <table class="table">
@@ -55,9 +60,15 @@
                     @Html.DisplayFor(modelItem => item.Info)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Змінити</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Вибрати</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Змінити</a>
+                    }
+                    | <a asp-action="Details" asp-route-id="@item.Id">Вибрати</a> |
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                    }
                 </td>
             </tr>
         }
@@ -70,7 +81,7 @@
 
 @section Scripts{
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    
+
     <script>
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
