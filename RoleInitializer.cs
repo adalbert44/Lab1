@@ -14,7 +14,7 @@ namespace lab1
             {
 				await roleManager.CreateAsync(new IdentityRole("admin"));
             }
-            if (await roleManager.FindByNameAsync("user") == null)
+			if (await roleManager.FindByNameAsync("user") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("user"));
             }

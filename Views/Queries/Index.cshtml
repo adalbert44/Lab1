@@ -1,0 +1,89 @@
+﻿@model lab1.Query
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>SQL запити</h2>
+
+<form asp-action="Execute">
+    <div>
+        <label>Назви страв, що містять інгредієнт</label>
+        <input asp-for="StringParameter">
+    </div>
+    <input type="hidden" asp-for="Id" value="1" />
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>
+<form asp-action="Execute">
+    <div>
+        <label>Назви ресторанів, що продають страви дорожчі за</label>
+        <input asp-for="Parameter" type="number" min="1" max="1000000">
+        <label>грн.</label>
+    </div>
+    <input type="hidden" asp-for="Id" value="2" />
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>
+<form asp-action="Execute">
+    <div>
+        <label>Назви типів страв які не продаються в ресторані</label>
+        <input asp-for="StringParameter">
+    </div>
+    <input type="hidden" asp-for="Id" value="3" />
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>
+<form asp-action="Execute">
+    <div>
+        <label>Назви типів страв які продаються не в ресторані</label>
+        <input asp-for="StringParameter">
+    </div>
+    <input type="hidden" asp-for="Id" value="4" />
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>
+<form asp-action="Execute">
+    <div>
+        <label>Ціни страв, які можна придбати на вулиці</label>
+        <input asp-for="StringParameter">
+    </div>
+    <input type="hidden" asp-for="Id" value="5" />
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>
+<form asp-action="Execute">
+    <div>
+        <label>Страви, що містять всі ті інгредієнти що й</label>
+        <input asp-for="StringParameter">
+    </div>
+    <input type="hidden" asp-for="Id" value="6" />
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>
+<form asp-action="Execute">
+    <div>
+        <label>Страви, що не містять ні одного спільного інгредієнта із стравою</label>
+        <input asp-for="StringParameter">
+    </div>
+    <input type="hidden" asp-for="Id" value="7" />
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>
+<form asp-action="Execute">
+    <div>
+        <label>Страви, всі інгредієнти яких містяться в</label>
+        <input asp-for="StringParameter">
+    </div>
+    <input type="hidden" asp-for="Id" value="8"/>
+    <div>
+        <input type="submit" value="Знайти" class="btn btn-primary" />
+    </div>
+</form>

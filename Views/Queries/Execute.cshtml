@@ -1,0 +1,16 @@
+﻿@model IEnumerable<String>
+
+@{
+    ViewData["Title"] = "результат";
+}
+
+<h1>Результат</h1>
+
+@foreach (var item in Model)
+{
+    <div>@item</div>
+}
+
+<div>
+    <a href='javascript:history.go(-1)'>Повернутись</a>
+</div>

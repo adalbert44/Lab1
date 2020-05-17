@@ -151,6 +151,19 @@ namespace lab1.Controllers
                 _context.RestaurantLocation.Remove(location);
             }
 
+            var dishesByRestaurant = await _context.Dish.Where(b => b.RestaurantId == id).ToListAsync();
+            foreach (var dish in dishesByRestaurant)
+            {
+                var ingredientsByDish = await _context.DishIngredient.Where(b => b.DishId == dish.Id).ToListAsync();
+                foreach (var dishIngredient in ingredientsByDish)
+                {
+                    _context.DishIngredient.Remove(dishIngredient);
+                }
+
+                _context.Dish.Remove(dish);
+            }
+
+
             _context.Restaurant.Remove(restaurant);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -31,6 +31,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Ingredients/Index">Інгредієнти</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Queries/Index">SQL запити</a>
+                    </li>
                     @if (User.IsInRole("admin"))
                     {
                         <li class="nav-item">
@@ -38,23 +41,23 @@
                         </li>
                     }
                     @if (User.Identity.IsAuthenticated)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link">@User.Identity.Name</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Account/Logout">Вихід</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Account" asp-action="Login"> Вхід </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Account" asp-action="Register"> Реєстація </a>
-                    </li>
-                }
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link">@User.Identity.Name</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/Logout">Вихід</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Login"> Вхід </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Account" asp-action="Register"> Реєстація </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </nav>

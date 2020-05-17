@@ -40,7 +40,10 @@ namespace lab1.Controllers
         {
             return RedirectToAction("Index", "Clients");
         }
-
+        public IActionResult Queries()
+        {
+            return RedirectToAction("Index", "Queries");
+        }
         public IActionResult Privacy()
         {
             return View();

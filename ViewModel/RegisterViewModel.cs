@@ -11,6 +11,7 @@ namespace lab1.ViewModel
 
 		[Required]
 		[Display(Name = "Рік народження")]
+		[Range(1900, 2020, ErrorMessage = "Рік народження повинен бути в межах [1900, 2020]")]
 		public int Year { get; set; }
 
 		[Required]
